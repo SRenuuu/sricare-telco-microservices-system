@@ -1,0 +1,63 @@
+# Ignore compiled bytecode
+*.class
+
+# Ignore log files
+*.log
+
+# Ignore IntelliJ IDEA files
+.idea/
+backend/*/.idea/
+
+# Ignore Eclipse files
+.classpath
+.project
+.settings/
+
+# Ignore Maven and Gradle build directories
+target/
+.gradle/
+!gradle-wrapper.jar  # Keep Gradle Wrapper JAR
+!.mvn/wrapper/maven-wrapper.jar  # Keep Maven Wrapper JAR
+
+# Ignore Spring Boot build artifacts
+**/target/
+**/spring-boot-starter/target/
+**/spring-boot-starter-*/
+**/*.jar
+**/*.war
+**/*.ear
+**/*.db
+
+# Ignore local application properties
+**/application-*.properties
+
+# Ignore log files
+**/log/
+
+# Ignore Visual Studio Code folder
+**/.vscode/
+
+# Ignore macOS specific files
+**/.DS_Store
+
+# Ignore Thumbnails
+**/._*
+**/Thumbs.db
+
+# Ignore Windows Installer files
+**/*.cab
+**/*.msi
+**/*.msm
+**/*.msp
+
+# Ignore Windows shortcuts
+**/*.lnk
+
+# Ignore Node.js related files in frontend
+frontend/*/node_modules/
+frontend/*/dist/
+
+# Ignore backend-specific files
+backend/*/target/
+backend/*/*.jar
+backend/*/build/
