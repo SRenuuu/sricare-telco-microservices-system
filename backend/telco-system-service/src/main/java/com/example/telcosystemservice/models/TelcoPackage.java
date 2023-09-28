@@ -9,6 +9,7 @@ import java.util.UUID;
 @Table(name = "telco_package")
 public class TelcoPackage {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

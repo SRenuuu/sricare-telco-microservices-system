@@ -10,6 +10,7 @@ import java.util.UUID;
 @Table(name = "user_package_activation")
 public class UserPackageActivation {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

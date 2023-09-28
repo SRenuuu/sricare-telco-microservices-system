@@ -1,6 +1,8 @@
 package com.example.telcosystemservice.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -9,6 +11,7 @@ import java.util.UUID;
 @Table(name = "user_service_subscription")
 public class UserServiceSubscription {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

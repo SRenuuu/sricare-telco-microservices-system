@@ -9,6 +9,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "telco_service")
 public class TelcoService {
+
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
