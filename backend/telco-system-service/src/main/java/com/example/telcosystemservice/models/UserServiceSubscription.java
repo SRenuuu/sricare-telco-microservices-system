@@ -1,4 +1,4 @@
-package com.example.telcosystemservice.model;
+package com.example.telcosystemservice.models;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;

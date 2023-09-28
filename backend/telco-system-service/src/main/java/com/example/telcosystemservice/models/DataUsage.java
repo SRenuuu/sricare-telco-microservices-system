@@ -1,4 +1,4 @@
-package com.example.telcosystemservice.model;
+package com.example.telcosystemservice.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -6,8 +6,8 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@Table(name = "voice_usage")
-public class VoiceUsage {
+@Table(name = "data_usage")
+public class DataUsage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,21 +20,19 @@ public class VoiceUsage {
 
     @Getter
     @Column(name = "record_dt", nullable = false)
-    private Timestamp recordDateTime;
+    private Timestamp recordDate;
 
     @Getter
     @Column(nullable = false)
     private Integer usage;
 
-    public VoiceUsage(UserPackageActivation activation, Timestamp recordDateTime, Integer usage) {
+    public DataUsage(UserPackageActivation activation, Timestamp recordDate, Integer usage) {
         this.activation = activation;
-        this.recordDateTime = recordDateTime;
+        this.recordDate = recordDate;
         this.usage = usage;
     }
 
-    public VoiceUsage() {
+    public DataUsage() {
 
     }
-
-
 }

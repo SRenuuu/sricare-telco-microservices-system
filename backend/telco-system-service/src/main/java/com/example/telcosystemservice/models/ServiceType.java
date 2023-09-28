@@ -1,4 +1,4 @@
-package com.example.telcosystemservice.model;
+package com.example.telcosystemservice.models;
 
 public enum ServiceType {
     VOICE,
