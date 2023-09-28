@@ -1,6 +1,5 @@
 package com.example.telcosystemservice.services;
 
-import com.example.telcosystemservice.dto.ActivateTelcoPackageRequest;
 import com.example.telcosystemservice.dto.CreateUserSubscriptionRequest;
 import com.example.telcosystemservice.models.*;
 import com.example.telcosystemservice.repositories.UserRepository;
