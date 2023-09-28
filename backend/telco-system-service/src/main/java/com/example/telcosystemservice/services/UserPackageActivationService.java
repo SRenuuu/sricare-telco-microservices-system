@@ -65,7 +65,7 @@ public class UserPackageActivationService {
            if (userPackageActivation.getStatus() == Status.ACTIVE) {
                userPackageActivation.setStatus(Status.OUTDATED);
 
-               userPackageActivationRepository.save(userPackageActivation);
+               userPackageActivation = userPackageActivationRepository.save(userPackageActivation);
            }
 
            return userPackageActivation;
