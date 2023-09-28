@@ -7,6 +7,7 @@ import com.example.telcosystemservice.repositories.TelcoPackageRepository;
 import com.example.telcosystemservice.repositories.UserPackageActivationRepository;
 import com.example.telcosystemservice.repositories.UserRepository;
 import com.example.telcosystemservice.repositories.UserSubscriptionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -21,6 +22,7 @@ public class UserPackageActivationService {
     private final TelcoPackageRepository telcoPackageRepository;
     private final UserSubscriptionRepository userSubscriptionRepository;
 
+    @Autowired
     public UserPackageActivationService(UserPackageActivationRepository userPackageActivationRepository, UserRepository userRepository, TelcoPackageRepository telcoPackageRepository, UserSubscriptionRepository userSubscriptionRepository) {
         this.userPackageActivationRepository = userPackageActivationRepository;
         this.userRepository = userRepository;
@@ -32,7 +34,7 @@ public class UserPackageActivationService {
 
         Optional<User> userOptional = userRepository.findById(activateTelcoPackageRequest.getUserId());
         Optional<TelcoPackage> telcoPackageOptional = telcoPackageRepository.findById(activateTelcoPackageRequest.getTelcoPackageId());
-        Optional<UserSubscription> userSubscriptionOptional = userSubscriptionRepository.findOneByUserId(activateTelcoPackageRequest.getUserId());
+        Optional<UserSubscription> userSubscriptionOptional = userSubscriptionRepository.findFirstByUserId(activateTelcoPackageRequest.getUserId());
 
 //        Is user is present and telco package is present and user has a base subscription
         if (userOptional.isPresent() && telcoPackageOptional.isPresent() && userSubscriptionOptional.isPresent()) {
