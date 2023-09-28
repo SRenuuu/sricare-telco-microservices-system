@@ -36,12 +36,17 @@ public class UserPackageActivation {
     @Column(nullable = false)
     private Status status;
 
+    @Getter
+    @Column(name = "remaining", nullable = false)
+    private Integer remaining;
+
     public UserPackageActivation(UUID id, User user, TelcoPackage telcoPackage, Timestamp activatedDateTime, Status status) {
         this.id = id;
         this.user = user;
         this.telcoPackage = telcoPackage;
         this.activatedDateTime = activatedDateTime;
         this.status = status;
+        this.remaining = telcoPackage.getSize();
     }
 
     public UserPackageActivation() {
