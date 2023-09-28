@@ -18,17 +18,21 @@ public class UserServiceSubscription {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
     private TelcoService telcoService;
 
+    @Getter
     @Column(name = "activated_dt", nullable = false)
     private Timestamp activatedDateTime;
 
+    @Getter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;

@@ -1,7 +1,9 @@
 package com.example.telcosystemservice.Controllers;
 
+import com.example.telcosystemservice.dto.DeactivatePackageRequest;
 import com.example.telcosystemservice.dto.RegisterTelcoServiceRequest;
 import com.example.telcosystemservice.dto.SubscribeTelcoServiceRequest;
+import com.example.telcosystemservice.dto.UnsubscribeServiceRequest;
 import com.example.telcosystemservice.models.TelcoService;
 import com.example.telcosystemservice.models.UserServiceSubscription;
 import com.example.telcosystemservice.services.TelcoServiceService;
@@ -45,6 +47,16 @@ public class TelcoServiceController {
     public UserServiceSubscription subscribeToService(@RequestBody SubscribeTelcoServiceRequest subscribeTelcoServiceRequest) {
 //        @TODO: does not return the entire UserServiceSubscription object
         return userServiceSubscriptionService.subscribeService(subscribeTelcoServiceRequest);
+    }
+
+    @GetMapping("/list")
+    public List<UserServiceSubscription> getServiceSubscriptionByUser(@RequestParam String user) {
+        return userServiceSubscriptionService.findUserSubscribedServices(user);
+    }
+
+    @PatchMapping("/deactivate")
+    public UserServiceSubscription deactivate(@RequestBody UnsubscribeServiceRequest unsubscribeServiceRequest) {
+        return userServiceSubscriptionService.unsubscribeService(unsubscribeServiceRequest);
     }
 
 }

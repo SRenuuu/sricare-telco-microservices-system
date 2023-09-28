@@ -1,7 +1,9 @@
 package com.example.telcosystemservice.services;
 
 import com.example.telcosystemservice.dto.ActivateTelcoPackageRequest;
+import com.example.telcosystemservice.dto.DeactivatePackageRequest;
 import com.example.telcosystemservice.dto.SubscribeTelcoServiceRequest;
+import com.example.telcosystemservice.dto.UnsubscribeServiceRequest;
 import com.example.telcosystemservice.models.*;
 import com.example.telcosystemservice.repositories.TelcoServiceRepository;
 import com.example.telcosystemservice.repositories.UserRepository;
@@ -9,7 +11,9 @@ import com.example.telcosystemservice.repositories.UserServiceSubscriptionReposi
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceSubscriptionService {
@@ -54,6 +58,28 @@ public class UserServiceSubscriptionService {
             return null;
         }
 
+    }
 
+    public UserServiceSubscription unsubscribeService(UnsubscribeServiceRequest unsubscribeServiceRequest) {
+        Optional<UserServiceSubscription> userServiceSubscriptionOptional = userServiceSubscriptionRepository.findById(unsubscribeServiceRequest.getUserServiceSubscriptionId());
+
+        if (userServiceSubscriptionOptional.isPresent()) {
+            UserServiceSubscription userServiceSubscription = userServiceSubscriptionOptional.get();
+
+            if (userServiceSubscription.getStatus() == Status.ACTIVE) {
+                userServiceSubscription.setStatus(Status.OUTDATED);
+
+                userServiceSubscription = userServiceSubscriptionRepository.save(userServiceSubscription);
+            }
+
+            return userServiceSubscription;
+        }
+
+        return null;
+    }
+
+    public List<UserServiceSubscription> findUserSubscribedServices(String userId) {
+        UUID user= UUID.fromString(userId);
+        return userServiceSubscriptionRepository.findAllByUserId(user);
     }
 }
