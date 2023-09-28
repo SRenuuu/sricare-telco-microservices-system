@@ -1,12 +1,14 @@
 package com.example.telcosystemservice.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
+@Builder
 @Table(name = "user_package_activation")
 public class UserPackageActivation {
 
@@ -34,7 +36,8 @@ public class UserPackageActivation {
     @Column(nullable = false)
     private Status status;
 
-    public UserPackageActivation(User user, TelcoPackage telcoPackage, Timestamp activatedDateTime, Status status) {
+    public UserPackageActivation(UUID id, User user, TelcoPackage telcoPackage, Timestamp activatedDateTime, Status status) {
+        this.id = id;
         this.user = user;
         this.telcoPackage = telcoPackage;
         this.activatedDateTime = activatedDateTime;
