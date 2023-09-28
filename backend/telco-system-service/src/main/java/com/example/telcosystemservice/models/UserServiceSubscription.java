@@ -1,6 +1,7 @@
 package com.example.telcosystemservice.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Timestamp;
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 
 @Entity
+@Builder
 @Table(name = "user_service_subscription")
 public class UserServiceSubscription {
 
@@ -31,7 +33,8 @@ public class UserServiceSubscription {
     @Column(nullable = false)
     private Status status;
 
-    public UserServiceSubscription(User user, TelcoService telcoService, Timestamp activatedDateTime, Status status) {
+    public UserServiceSubscription(UUID id, User user, TelcoService telcoService, Timestamp activatedDateTime, Status status) {
+        this.id = id;
         this.user = user;
         this.telcoService = telcoService;
         this.activatedDateTime = activatedDateTime;

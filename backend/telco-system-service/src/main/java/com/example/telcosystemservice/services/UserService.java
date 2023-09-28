@@ -16,9 +16,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User saveUser(String nic, String fullName, Date dob, String email) {
-        User user = new User(nic, fullName, dob, email);
-
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 }

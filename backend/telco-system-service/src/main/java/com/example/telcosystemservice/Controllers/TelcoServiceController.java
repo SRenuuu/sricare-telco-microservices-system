@@ -1,9 +1,11 @@
 package com.example.telcosystemservice.Controllers;
 
 import com.example.telcosystemservice.dto.RegisterTelcoServiceRequest;
+import com.example.telcosystemservice.dto.SubscribeTelcoServiceRequest;
 import com.example.telcosystemservice.models.TelcoService;
-import com.example.telcosystemservice.repositories.TelcoServiceRepository;
+import com.example.telcosystemservice.models.UserServiceSubscription;
 import com.example.telcosystemservice.services.TelcoServiceService;
+import com.example.telcosystemservice.services.UserServiceSubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +16,12 @@ import java.util.List;
 public class TelcoServiceController {
 
     private final TelcoServiceService telcoServiceService;
+    private final UserServiceSubscriptionService userServiceSubscriptionService;
 
     @Autowired
-    public TelcoServiceController(TelcoServiceService telcoServiceService) {
+    public TelcoServiceController(TelcoServiceService telcoServiceService, UserServiceSubscriptionService userServiceSubscriptionService) {
         this.telcoServiceService = telcoServiceService;
+        this.userServiceSubscriptionService = userServiceSubscriptionService;
     }
 
 
@@ -35,6 +39,12 @@ public class TelcoServiceController {
     @GetMapping("/view")
     public List<TelcoService> getAllTelcoServices() {
         return telcoServiceService.getAllTelcoServices();
+    }
+
+    @PostMapping("/subscribe")
+    public UserServiceSubscription subscribeToService(@RequestBody SubscribeTelcoServiceRequest subscribeTelcoServiceRequest) {
+//        @TODO: does not return the entire UserServiceSubscription object
+        return userServiceSubscriptionService.subscribeService(subscribeTelcoServiceRequest);
     }
 
 }
