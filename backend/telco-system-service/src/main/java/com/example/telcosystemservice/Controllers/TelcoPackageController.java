@@ -1,6 +1,7 @@
 package com.example.telcosystemservice.Controllers;
 
 import com.example.telcosystemservice.dto.ActivateTelcoPackageRequest;
+import com.example.telcosystemservice.dto.DeactivatePackageRequest;
 import com.example.telcosystemservice.dto.RegisterTelcoPackageRequest;
 import com.example.telcosystemservice.models.TelcoPackage;
 import com.example.telcosystemservice.models.UserPackageActivation;
@@ -46,4 +47,15 @@ public class TelcoPackageController {
     public UserPackageActivation activatePackage(@RequestBody ActivateTelcoPackageRequest activateTelcoPackageRequest) {
         return userPackageActivationService.activatePackage(activateTelcoPackageRequest);
     }
+
+    @GetMapping("/list")
+    public List<UserPackageActivation> getPackageActivationsByUser(@RequestParam String user) {
+        return userPackageActivationService.findUserActivatedPackages(user);
+    }
+
+    @PatchMapping("/deactivate")
+    public UserPackageActivation deactivate(@RequestBody DeactivatePackageRequest deactivatePackageRequest) {
+        return userPackageActivationService.deactivatePackage(deactivatePackageRequest);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.telcosystemservice.services;
 
 import com.example.telcosystemservice.dto.ActivateTelcoPackageRequest;
+import com.example.telcosystemservice.dto.DeactivatePackageRequest;
 import com.example.telcosystemservice.models.Status;
 import com.example.telcosystemservice.models.TelcoPackage;
 import com.example.telcosystemservice.models.User;
@@ -11,6 +12,7 @@ import com.example.telcosystemservice.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,5 +54,28 @@ public class UserPackageActivationService {
         }
 
 
+    }
+
+    public UserPackageActivation deactivatePackage(DeactivatePackageRequest deactivatePackageRequest) {
+        Optional<UserPackageActivation> userPackageActivationOptional = userPackageActivationRepository.findById(deactivatePackageRequest.getUserPackageActivationId());
+
+        if (userPackageActivationOptional.isPresent()) {
+           UserPackageActivation userPackageActivation = userPackageActivationOptional.get();
+
+           if (userPackageActivation.getStatus() == Status.ACTIVE) {
+               userPackageActivation.setStatus(Status.OUTDATED);
+
+               userPackageActivationRepository.save(userPackageActivation);
+           }
+
+           return userPackageActivation;
+        }
+
+        return null;
+    }
+
+    public List<UserPackageActivation> findUserActivatedPackages(String userId) {
+        UUID user= UUID.fromString(userId);
+        return userPackageActivationRepository.findAllByUserId(user);
     }
 }
