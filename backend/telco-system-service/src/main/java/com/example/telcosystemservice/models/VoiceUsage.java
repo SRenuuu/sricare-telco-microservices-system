@@ -1,13 +1,15 @@
 package com.example.telcosystemservice.models;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
+@Builder
 @Table(name = "voice_usage")
-public class VoiceUsage {
+public class VoiceUsage implements Usage{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,7 +28,8 @@ public class VoiceUsage {
     @Column(nullable = false)
     private Integer usage;
 
-    public VoiceUsage(UserPackageActivation activation, Timestamp recordDateTime, Integer usage) {
+    public VoiceUsage(UUID id, UserPackageActivation activation, Timestamp recordDateTime, Integer usage) {
+        this.id = id;
         this.activation = activation;
         this.recordDateTime = recordDateTime;
         this.usage = usage;

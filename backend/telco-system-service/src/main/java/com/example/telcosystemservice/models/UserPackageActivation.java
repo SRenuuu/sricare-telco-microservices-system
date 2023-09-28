@@ -40,7 +40,7 @@ public class UserPackageActivation {
     @Column(name = "remaining", nullable = false)
     private Integer remaining;
 
-    public UserPackageActivation(UUID id, User user, TelcoPackage telcoPackage, Timestamp activatedDateTime, Status status) {
+    public UserPackageActivation(UUID id, User user, TelcoPackage telcoPackage, Timestamp activatedDateTime, Status status, Integer remaining) {
         this.id = id;
         this.user = user;
         this.telcoPackage = telcoPackage;
@@ -55,5 +55,9 @@ public class UserPackageActivation {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void setRemaining(Integer remaining) {
+        this.remaining = remaining;
     }
 }

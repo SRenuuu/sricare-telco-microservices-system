@@ -100,4 +100,8 @@ public class UserSubscriptionService {
 
         return Optional.empty();
     }
+
+    public Optional<UserSubscription> findByUserId(UUID userId) {
+        return userSubscriptionRepository.findFirstByUserId(userId);
+    }
 }

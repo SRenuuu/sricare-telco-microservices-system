@@ -88,11 +88,48 @@ public class UserPackageActivationService {
            return userPackageActivation;
         }
 
+//        TODO: Before returning - deduct the amount of left in this package from userSubscription  (total amount)
+
         return null;
     }
 
     public List<UserPackageActivation> findUserActivatedPackages(String userId) {
         UUID user= UUID.fromString(userId);
         return userPackageActivationRepository.findAllByUserId(user);
+    }
+
+//    Deducts the used amount from the given packageActivation - is Package is already Outdated, returns null, else returns whether that package is VOICE or DATA
+    public Optional<UserPackageActivation> reduceRemainingAmount(UUID id, Integer amount) {
+        Optional<UserPackageActivation> userPackageActivationOptional = userPackageActivationRepository.findById(id);
+
+        if (userPackageActivationOptional.isPresent()) {
+            UserPackageActivation userPackageActivation = userPackageActivationOptional.get();
+
+            if (userPackageActivation.getStatus() == Status.OUTDATED) return Optional.empty();
+
+            if (userPackageActivation.getRemaining() - amount > 0) {
+                userPackageActivation.setRemaining(userPackageActivation.getRemaining() - amount);
+            }
+            else {
+                userPackageActivation.setRemaining(0);
+                userPackageActivation.setStatus(Status.OUTDATED);
+
+            }
+
+            return Optional.of(userPackageActivation);
+        }
+
+        return Optional.empty();
+    }
+
+    public Optional<User> findUserByUserPackageActivationId(UUID id) {
+        Optional<UserPackageActivation> userPackageActivationOptional = userPackageActivationRepository.findById(id);
+
+        if (userPackageActivationOptional.isPresent()) {
+            UserPackageActivation userPackageActivation = userPackageActivationOptional.get();
+            return Optional.of(userPackageActivation.getUser());
+        }
+
+        return Optional.empty();
     }
 }
