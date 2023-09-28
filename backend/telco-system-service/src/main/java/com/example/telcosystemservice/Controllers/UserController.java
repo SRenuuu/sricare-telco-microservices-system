@@ -1,5 +1,6 @@
 package com.example.telcosystemservice.Controllers;
 
+import com.example.telcosystemservice.dto.RegisterUserRequest;
 import com.example.telcosystemservice.models.User;
 import com.example.telcosystemservice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,13 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        return userRepository.save(user);
+    public User addUser(@RequestBody RegisterUserRequest registerUserRequest) {
+        User newUser = User.builder()
+                .nic(registerUserRequest.getNic())
+                .fullName(registerUserRequest.getFullName())
+                .email(registerUserRequest.getEmail())
+                .dob(registerUserRequest.getDob())
+                .build();
+        return userRepository.save(newUser);
     }
 }

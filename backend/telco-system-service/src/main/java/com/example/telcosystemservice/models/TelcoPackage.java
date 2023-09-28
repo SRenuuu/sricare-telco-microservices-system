@@ -1,11 +1,13 @@
 package com.example.telcosystemservice.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.UUID;
 
 @Entity
+@Builder
 @Table(name = "telco_package")
 public class TelcoPackage {
 
@@ -36,7 +38,8 @@ public class TelcoPackage {
     @Column(name = "service_type", nullable = false)
     private ServiceType serviceType;
 
-    public TelcoPackage(String name, Float price, Integer size, PayType payType, ServiceType serviceType) {
+    public TelcoPackage(UUID id, String name, Float price, Integer size, PayType payType, ServiceType serviceType) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.size = size;
