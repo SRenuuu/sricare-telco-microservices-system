@@ -1,11 +1,13 @@
 package com.example.telcosystemservice.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.UUID;
 
 @Entity
+@Builder
 @Table(name = "user_subscriptions")
 public class UserSubscription {
 
@@ -46,7 +48,8 @@ public class UserSubscription {
     @Column(name = "outstanding_amount", nullable = false)
     private Integer outstandingAmount;
 
-    public UserSubscription(User user, String phone, PayType payType, String basePackage, Integer reloadBalance, Integer voiceBalance, Integer dataBalance, Integer outstandingAmount) {
+    public UserSubscription(UUID id, User user, String phone, PayType payType, String basePackage, Integer reloadBalance, Integer voiceBalance, Integer dataBalance, Integer outstandingAmount) {
+        this.id = id;
         this.user = user;
         this.phone = phone;
         this.payType = payType;
