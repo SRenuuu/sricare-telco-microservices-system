@@ -45,7 +45,6 @@ public class TelcoServiceController {
 
     @PostMapping("/subscribe")
     public UserServiceSubscription subscribeToService(@RequestBody SubscribeTelcoServiceRequest subscribeTelcoServiceRequest) {
-//        @TODO: does not return the entire UserServiceSubscription object
         return userServiceSubscriptionService.subscribeService(subscribeTelcoServiceRequest);
     }
 
