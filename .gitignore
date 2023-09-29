@@ -61,3 +61,5 @@ frontend/*/dist/
 backend/*/target/
 backend/*/*.jar
 backend/*/build/
+
+backend/billing-payments-service/src/main/resources/application.properties
