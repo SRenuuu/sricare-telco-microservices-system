@@ -1,6 +1,5 @@
-package com.example.telcosystemservice.Controllers;
+package com.example.telcosystemservice.controllers;
 
-import com.example.telcosystemservice.dto.DeactivatePackageRequest;
 import com.example.telcosystemservice.dto.RegisterTelcoServiceRequest;
 import com.example.telcosystemservice.dto.SubscribeTelcoServiceRequest;
 import com.example.telcosystemservice.dto.UnsubscribeServiceRequest;
