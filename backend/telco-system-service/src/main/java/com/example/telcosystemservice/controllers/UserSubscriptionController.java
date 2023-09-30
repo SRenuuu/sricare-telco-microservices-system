@@ -1,6 +1,8 @@
 package com.example.telcosystemservice.controllers;
 
+import com.example.telcosystemservice.dto.AnyResponse;
 import com.example.telcosystemservice.dto.CreateUserSubscriptionRequest;
+import com.example.telcosystemservice.dto.ReloadRequest;
 import com.example.telcosystemservice.models.UserSubscription;
 import com.example.telcosystemservice.services.UserSubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,13 @@ public class UserSubscriptionController {
     }
 
     @PostMapping("/add")
-    public UserSubscription subscribe(@RequestBody CreateUserSubscriptionRequest createUserSubscriptionRequest) {
+    public AnyResponse subscribe(@RequestBody CreateUserSubscriptionRequest createUserSubscriptionRequest) {
         return userSubscriptionService.subscribe(createUserSubscriptionRequest);
+    }
+
+
+    @PostMapping("/reload")
+    public AnyResponse reload(@RequestBody ReloadRequest reloadRequest) {
+        return userSubscriptionService.updateReloadBalance(reloadRequest);
     }
 }

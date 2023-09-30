@@ -1,6 +1,7 @@
 package com.example.telcosystemservice.controllers;
 
 import com.example.telcosystemservice.dto.ActivateTelcoPackageRequest;
+import com.example.telcosystemservice.dto.AnyResponse;
 import com.example.telcosystemservice.dto.DeactivatePackageRequest;
 import com.example.telcosystemservice.dto.RegisterTelcoPackageRequest;
 import com.example.telcosystemservice.models.TelcoPackage;
@@ -25,7 +26,7 @@ public class TelcoPackageController {
     }
 
     @PostMapping("/add")
-    public TelcoPackage addTelcoService(@RequestBody RegisterTelcoPackageRequest registerTelcoPackageRequest) {
+    public AnyResponse addTelcoService(@RequestBody RegisterTelcoPackageRequest registerTelcoPackageRequest) {
         TelcoPackage telcoPackage = TelcoPackage.builder()
                 .serviceType(registerTelcoPackageRequest.getServiceType())
                 .name(registerTelcoPackageRequest.getName())
@@ -34,7 +35,8 @@ public class TelcoPackageController {
                 .size(registerTelcoPackageRequest.getSize())
                 .build();
 
-        return telcoPackageService.addTelcoPackage(telcoPackage);
+        telcoPackage = telcoPackageService.addTelcoPackage(telcoPackage);
+        return AnyResponse.builder().message("Package added successfully").data(telcoPackage).build();
     }
 
     @GetMapping("/view")
@@ -44,17 +46,17 @@ public class TelcoPackageController {
 
 
     @PostMapping("/activate")
-    public UserPackageActivation activatePackage(@RequestBody ActivateTelcoPackageRequest activateTelcoPackageRequest) {
+    public AnyResponse activatePackage(@RequestBody ActivateTelcoPackageRequest activateTelcoPackageRequest) {
         return userPackageActivationService.activatePackage(activateTelcoPackageRequest);
     }
 
     @GetMapping("/list")
-    public List<UserPackageActivation> getPackageActivationsByUser(@RequestParam String user) {
+    public AnyResponse getPackageActivationsByUser(@RequestParam String user) {
         return userPackageActivationService.findUserActivatedPackages(user);
     }
 
     @PatchMapping("/deactivate")
-    public UserPackageActivation deactivate(@RequestBody DeactivatePackageRequest deactivatePackageRequest) {
+    public AnyResponse deactivate(@RequestBody DeactivatePackageRequest deactivatePackageRequest) {
         return userPackageActivationService.deactivatePackage(deactivatePackageRequest);
     }
 

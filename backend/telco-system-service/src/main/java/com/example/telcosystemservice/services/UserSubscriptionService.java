@@ -1,6 +1,8 @@
 package com.example.telcosystemservice.services;
 
+import com.example.telcosystemservice.dto.AnyResponse;
 import com.example.telcosystemservice.dto.CreateUserSubscriptionRequest;
+import com.example.telcosystemservice.dto.ReloadRequest;
 import com.example.telcosystemservice.models.*;
 import com.example.telcosystemservice.repositories.UserRepository;
 import com.example.telcosystemservice.repositories.UserSubscriptionRepository;
@@ -20,7 +22,7 @@ public class UserSubscriptionService {
         this.userRepository = userRepository;
     }
 
-    public UserSubscription subscribe(CreateUserSubscriptionRequest createUserSubscriptionRequest) {
+    public AnyResponse subscribe(CreateUserSubscriptionRequest createUserSubscriptionRequest) {
 
         Optional<User> userOptional = userRepository.findById(createUserSubscriptionRequest.getUserId());
 
@@ -40,10 +42,11 @@ public class UserSubscriptionService {
                     .outstandingAmount(0)
                     .build();
 
-            return userSubscriptionRepository.save(userSubscription);
+            userSubscription = userSubscriptionRepository.save(userSubscription);
+            return AnyResponse.builder().message("Subscribed").data(userSubscription).build();
 
         }else {
-            return null;
+            return AnyResponse.builder().message("Subscription failed").data(null).build();
         }
 
 
@@ -103,5 +106,21 @@ public class UserSubscriptionService {
 
     public Optional<UserSubscription> findByUserId(UUID userId) {
         return userSubscriptionRepository.findFirstByUserId(userId);
+    }
+
+    public AnyResponse updateReloadBalance(ReloadRequest reloadRequest) {
+        Optional<UserSubscription> userSubscriptionOptional = this.findByUserId(reloadRequest.getUserId());
+
+        if (userSubscriptionOptional.isPresent()) {
+
+            UserSubscription userSubscription = userSubscriptionOptional.get();
+            userSubscription.setReloadBalance(userSubscription.getReloadBalance() + reloadRequest.getAmount());
+
+            userSubscription = userSubscriptionRepository.save(userSubscription);
+            return AnyResponse.builder().message("Reloading successful").data(userSubscription).build();
+
+        } else {
+            return AnyResponse.builder().message("User does not exist").data(null).build();
+        }
     }
 }

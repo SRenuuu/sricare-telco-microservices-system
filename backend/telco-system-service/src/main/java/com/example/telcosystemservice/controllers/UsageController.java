@@ -1,6 +1,7 @@
 package com.example.telcosystemservice.controllers;
 
 import com.example.telcosystemservice.dto.AddUsageRequest;
+import com.example.telcosystemservice.dto.AnyResponse;
 import com.example.telcosystemservice.models.Usage;
 import com.example.telcosystemservice.services.VoiceDataUsageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class UsageController {
         this.voiceDataUsageService = voiceDataUsageService;
     }
     @PostMapping("/use")
-    public Usage addUsage(@RequestBody AddUsageRequest addUsageRequest) {
+    public AnyResponse addUsage(@RequestBody AddUsageRequest addUsageRequest) {
         return voiceDataUsageService.addUsage(addUsageRequest);
     }
 

@@ -1,5 +1,6 @@
 package com.example.telcosystemservice.services;
 
+import com.example.telcosystemservice.dto.AnyResponse;
 import com.example.telcosystemservice.models.User;
 import com.example.telcosystemservice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public AnyResponse saveUser(User user) {
+        try {
+            User newUser = userRepository.save(user);
+            return AnyResponse.builder().message("User added successfully").data(newUser).build();
+        } catch (Exception e) {
+            return AnyResponse.builder().message("Could not add user").data(null).build();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.telcosystemservice.services;
 
 import com.example.telcosystemservice.dto.AddUsageRequest;
+import com.example.telcosystemservice.dto.AnyResponse;
 import com.example.telcosystemservice.models.*;
 import com.example.telcosystemservice.repositories.DataUsageRepository;
 import com.example.telcosystemservice.repositories.VoiceUsageRepository;
@@ -24,7 +25,7 @@ public class VoiceDataUsageService {
         this.userPackageActivationService = userPackageActivationService;
     }
 
-    public Usage addUsage(AddUsageRequest addUsageRequest) {
+    public AnyResponse addUsage(AddUsageRequest addUsageRequest) {
 
         Optional<UserPackageActivation> userPackageActivationOptional = userPackageActivationService.reduceRemainingAmount(addUsageRequest.getUserPackageActivationId(), addUsageRequest.getUsage());
         if (userPackageActivationOptional.isPresent()) {
@@ -49,7 +50,9 @@ public class VoiceDataUsageService {
                             .usage(addUsageRequest.getUsage())
                             .build();
 
-                    return voiceUsageRepository.save(voiceUsage);
+                    voiceUsage = voiceUsageRepository.save(voiceUsage);
+
+                    return AnyResponse.builder().message("Usage added").data(voiceUsage).build();
 
                 case DATA:
                     userSubscription.setVoiceBalance(userSubscription.getVoiceBalance() - addUsageRequest.getUsage());
@@ -60,12 +63,14 @@ public class VoiceDataUsageService {
                             .usage(addUsageRequest.getUsage())
                             .build();
 
-                    return dataUsageRepository.save(dataUsage);
+                    dataUsage =  dataUsageRepository.save(dataUsage);
+
+                    return AnyResponse.builder().message("Usage added").data(dataUsage).build();
             }
 
 
         }else {
-            return null;
+            return AnyResponse.builder().message("Package has been expired or not available").data(null).build();
         }
 
         return null;

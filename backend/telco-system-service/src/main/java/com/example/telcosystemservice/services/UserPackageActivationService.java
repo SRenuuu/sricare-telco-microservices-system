@@ -1,6 +1,7 @@
 package com.example.telcosystemservice.services;
 
 import com.example.telcosystemservice.dto.ActivateTelcoPackageRequest;
+import com.example.telcosystemservice.dto.AnyResponse;
 import com.example.telcosystemservice.dto.DeactivatePackageRequest;
 import com.example.telcosystemservice.models.*;
 import com.example.telcosystemservice.repositories.TelcoPackageRepository;
@@ -30,7 +31,7 @@ public class UserPackageActivationService {
         this.userSubscriptionRepository = userSubscriptionRepository;
     }
 
-    public UserPackageActivation activatePackage(ActivateTelcoPackageRequest activateTelcoPackageRequest) {
+    public AnyResponse activatePackage(ActivateTelcoPackageRequest activateTelcoPackageRequest) {
 
         Optional<User> userOptional = userRepository.findById(activateTelcoPackageRequest.getUserId());
         Optional<TelcoPackage> telcoPackageOptional = telcoPackageRepository.findById(activateTelcoPackageRequest.getTelcoPackageId());
@@ -41,6 +42,15 @@ public class UserPackageActivationService {
             User user = userOptional.get();
             TelcoPackage telcoPackage = telcoPackageOptional.get();
             UserSubscription userSubscription = userSubscriptionOptional.get();
+
+//            Activate only user has sufficient amount in the account
+            if (userSubscription.getReloadBalance() < telcoPackage.getPrice())  return AnyResponse.builder()
+                    .message("Account balance is not sufficient")
+                    .data(null).build();
+
+//            Deduct the amount
+            userSubscription.setReloadBalance((int) (userSubscription.getReloadBalance()- telcoPackage.getPrice()));
+            userSubscriptionRepository.save(userSubscription);
 
             long currentTimeMillis = System.currentTimeMillis();
             Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
@@ -64,16 +74,17 @@ public class UserPackageActivationService {
             }
 
             userSubscriptionRepository.save(userSubscription);
-            return userPackageActivationRepository.save(userPackageActivation);
+            userPackageActivation = userPackageActivationRepository.save(userPackageActivation);
+            return AnyResponse.builder().message("Package activated successfully").data(userPackageActivation).build();
 
         }else {
-            return null;
+            return AnyResponse.builder().message("This user cannot activate specified package").data(null).build();
         }
 
 
     }
 
-    public UserPackageActivation deactivatePackage(DeactivatePackageRequest deactivatePackageRequest) {
+    public AnyResponse deactivatePackage(DeactivatePackageRequest deactivatePackageRequest) {
         Optional<UserPackageActivation> userPackageActivationOptional = userPackageActivationRepository.findById(deactivatePackageRequest.getUserPackageActivationId());
 
         if (userPackageActivationOptional.isPresent()) {
@@ -85,17 +96,19 @@ public class UserPackageActivationService {
                userPackageActivation = userPackageActivationRepository.save(userPackageActivation);
            }
 
-           return userPackageActivation;
+            return AnyResponse.builder().message("Package deactivated successfully").data(userPackageActivation).build();
         }
 
 //        TODO: Before returning - deduct the amount of left in this package from userSubscription  (total amount)
 
-        return null;
+        return AnyResponse.builder().message("Package deactivation failed").data(null).build();
     }
 
-    public List<UserPackageActivation> findUserActivatedPackages(String userId) {
+    public AnyResponse findUserActivatedPackages(String userId) {
         UUID user= UUID.fromString(userId);
-        return userPackageActivationRepository.findAllByUserId(user);
+        List<UserPackageActivation> activatedPackages = userPackageActivationRepository.findAllByUserId(user);
+        return AnyResponse.builder().message("Found packages").data(activatedPackages).build();
+
     }
 
 //    Deducts the used amount from the given packageActivation - is Package is already Outdated, returns null, else returns whether that package is VOICE or DATA

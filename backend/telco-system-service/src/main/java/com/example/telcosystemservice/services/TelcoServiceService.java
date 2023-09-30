@@ -1,5 +1,6 @@
 package com.example.telcosystemservice.services;
 
+import com.example.telcosystemservice.dto.AnyResponse;
 import com.example.telcosystemservice.models.TelcoService;
 import com.example.telcosystemservice.repositories.TelcoServiceRepository;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,13 @@ public class TelcoServiceService {
         this.telcoServiceRepository = telcoServiceRepository;
     }
 
-    public TelcoService addTelcoService(TelcoService telcoService) {
-        return telcoServiceRepository.save(telcoService);
+    public AnyResponse addTelcoService(TelcoService telcoService) {
+        TelcoService telcoServiceNew = telcoServiceRepository.save(telcoService);
+        return AnyResponse.builder().message("Service added successfully").data(telcoServiceNew).build();
     }
 
-    public List<TelcoService> getAllTelcoServices() {
-        return telcoServiceRepository.findAll();
+    public AnyResponse getAllTelcoServices() {
+        List<TelcoService> telcoServices = telcoServiceRepository.findAll();
+        return AnyResponse.builder().message("Found services").data(telcoServices).build();
     }
 }

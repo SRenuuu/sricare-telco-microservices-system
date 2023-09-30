@@ -1,5 +1,6 @@
 package com.example.telcosystemservice.controllers;
 
+import com.example.telcosystemservice.dto.AnyResponse;
 import com.example.telcosystemservice.dto.RegisterTelcoServiceRequest;
 import com.example.telcosystemservice.dto.SubscribeTelcoServiceRequest;
 import com.example.telcosystemservice.dto.UnsubscribeServiceRequest;
@@ -27,7 +28,7 @@ public class TelcoServiceController {
 
 
     @PostMapping("/add")
-    public TelcoService addTelcoService(@RequestBody RegisterTelcoServiceRequest registerTelcoServiceRequest) {
+    public AnyResponse addTelcoService(@RequestBody RegisterTelcoServiceRequest registerTelcoServiceRequest) {
         TelcoService telcoService = TelcoService.builder()
                 .name(registerTelcoServiceRequest.getName())
                 .price(registerTelcoServiceRequest.getPrice())
@@ -38,22 +39,22 @@ public class TelcoServiceController {
     }
 
     @GetMapping("/view")
-    public List<TelcoService> getAllTelcoServices() {
+    public AnyResponse getAllTelcoServices() {
         return telcoServiceService.getAllTelcoServices();
     }
 
     @PostMapping("/subscribe")
-    public UserServiceSubscription subscribeToService(@RequestBody SubscribeTelcoServiceRequest subscribeTelcoServiceRequest) {
+    public AnyResponse subscribeToService(@RequestBody SubscribeTelcoServiceRequest subscribeTelcoServiceRequest) {
         return userServiceSubscriptionService.subscribeService(subscribeTelcoServiceRequest);
     }
 
     @GetMapping("/list")
-    public List<UserServiceSubscription> getServiceSubscriptionByUser(@RequestParam String user) {
+    public AnyResponse getServiceSubscriptionByUser(@RequestParam String user) {
         return userServiceSubscriptionService.findUserSubscribedServices(user);
     }
 
     @PatchMapping("/deactivate")
-    public UserServiceSubscription deactivate(@RequestBody UnsubscribeServiceRequest unsubscribeServiceRequest) {
+    public AnyResponse deactivate(@RequestBody UnsubscribeServiceRequest unsubscribeServiceRequest) {
         return userServiceSubscriptionService.unsubscribeService(unsubscribeServiceRequest);
     }
 
