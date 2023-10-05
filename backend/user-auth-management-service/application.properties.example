@@ -3,3 +3,4 @@ spring.datasource.username=
 spring.datasource.password=
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+token.signing-key=
