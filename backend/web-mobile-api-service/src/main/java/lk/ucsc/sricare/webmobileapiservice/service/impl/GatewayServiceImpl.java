@@ -21,10 +21,15 @@ public class GatewayServiceImpl implements GatewayService {
 
     @Override
     public String register(RegAccount regAccount) {
-        //should include registration-service->registration_api call to register a user
-        //return user token
-
-        return "Registration successful ..";
+        if (regAccount.CheckConstraints()){
+            //should include registration-service->registration_api call to register a user
+            //return user token
+            regAccount.statusCode = 201;
+            return "Registration successful ..";
+        }else{
+            regAccount.statusCode = 400;
+            return "email or password is missing";
+        }
     }
 
 

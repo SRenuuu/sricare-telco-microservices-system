@@ -18,7 +18,12 @@ public class RegAccount {
     private String email;
     private String address;
     private String password;
+    public Integer statusCode ;
     public String status = "";
+
+    public boolean CheckConstraints(){
+        return email != null && password != null;
+    }
 
     public void PrintAll(){
         System.out.println(nic);
