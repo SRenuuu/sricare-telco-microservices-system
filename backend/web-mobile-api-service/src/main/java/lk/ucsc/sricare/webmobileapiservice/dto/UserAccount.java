@@ -1,22 +1,22 @@
 package lk.ucsc.sricare.webmobileapiservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lk.ucsc.sricare.webmobileapiservice.dto.model.Role;
+import lombok.*;
 
 import java.util.Date;
+import java.util.UUID;
 
-@Getter
-@Setter
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 //(id, nic, full_name, dob, email, address)
 public class UserAccount {
-    private long id;
+    private UUID id;
     private String nic;
-    private String full_name;
-    private Date dob ;
+    private String name;
     private String email;
-    private String address;
+    private String password;
+
+    private Role role;
 }

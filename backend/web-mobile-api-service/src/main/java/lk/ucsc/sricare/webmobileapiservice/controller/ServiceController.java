@@ -17,8 +17,8 @@ public class ServiceController {
     private GatewayService gatewayService;
 
     @GetMapping("/status")
-    public String statusCheck(){
-        return "Server is running....";
+    public ResponseEntity<String> statusCheck(){
+        return ResponseEntity.ok("Server is Running......");
     }
 
     @PostMapping("auth/register")
