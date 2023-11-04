@@ -21,7 +21,7 @@ public class ServiceController {
         return ResponseEntity.ok("Server is Running......");
     }
 
-    @PostMapping("auth/register")
+    @PostMapping("/auth/register")
     //change the typo of ResponseEntity to UserAccount after calling register service api
     public ResponseEntity<RegAccount> register(@RequestBody RegAccount regAccount){
 
