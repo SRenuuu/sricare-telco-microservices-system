@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,11 +55,15 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public JwtAuthenticationResponse loginUserByEmailAndPassword(EmailPasswordLoginRequest request) {
-        authenticationManager.authenticate(
+        // Authenticate the user
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new CustomException("Invalid email or password", HttpStatus.UNAUTHORIZED));
-        String jwt = jwtService.generateToken(user);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        //return jwtGenVal.generateToken(authentication);
+
+
+        String jwt = jwtService.generateToken(authentication);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
