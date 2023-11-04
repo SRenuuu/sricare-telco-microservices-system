@@ -1,4 +1,4 @@
-package lk.ucsc.sricare.serviceissuesservice.entity;
+package lk.ucsc.sricare.serviceissuesservice.dto;
 
 import jakarta.validation.constraints.NotNull;
 

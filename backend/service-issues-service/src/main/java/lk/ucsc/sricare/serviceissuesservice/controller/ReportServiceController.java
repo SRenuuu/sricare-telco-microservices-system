@@ -1,6 +1,6 @@
 package lk.ucsc.sricare.serviceissuesservice.controller;
 import jakarta.validation.Valid;
-import lk.ucsc.sricare.serviceissuesservice.entity.PostRequestDTO;
+import lk.ucsc.sricare.serviceissuesservice.dto.PostRequestDTO;
 import lk.ucsc.sricare.serviceissuesservice.entity.RequestStatus;
 import lk.ucsc.sricare.serviceissuesservice.entity.ServiceRequest;
 import lk.ucsc.sricare.serviceissuesservice.service.ServiceRequestService;
