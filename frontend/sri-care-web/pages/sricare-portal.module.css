@@ -1,0 +1,16 @@
+/* pages/sricare-portal.module.css */
+.sri-care-portal {
+    text-align: center;
+  }
+  
+  .sri-care-portal h1 {
+    color: #141098;
+    font-size: 24px;
+  }
+  
+  .sri-care-portal p {
+    color: #333;
+  }
+  
+  /* Define styles for your buttons, links, etc. */
+  
