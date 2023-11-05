@@ -20,6 +20,7 @@ public class User implements UserDetails {
     private UUID id;
     private String nic;
     private String name;
+    private String phone;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
