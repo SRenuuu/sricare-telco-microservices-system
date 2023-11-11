@@ -1,0 +1,17 @@
+/* LandingPage.css */
+.custom-button {
+    border-color: #141098;
+    border-width: 3px;
+    color: #141098;
+    background-color: white;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .custom-button:hover {
+    background-color: #141098;
+    color: white;
+  }
+
+  .custom-login-button {
+    background-color: #141098;
+  }

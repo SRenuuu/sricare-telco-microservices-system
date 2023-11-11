@@ -1,0 +1,12 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: API-GATEWAY-SRICARE-TELCO-SERVICES
+  cloud:
+    gateway:
+      routes:
+        - id: DEMO-SERVICE
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/usergateway/**
